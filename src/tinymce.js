@@ -73,6 +73,17 @@ angular.module('ui.tinymce', [])
             tinyInstance.setContent(ngModel.$viewValue || '');
           }
         };
+
+        /* ensure instance is removed when scope is */
+        elm.bind("$destroy", function () {
+          if (!tinyInstance) {
+            tinyInstance = tinymce.get(attrs.id);
+          }
+          if (tinyInstance) {
+            tinymce.get(attrs.id).remove()
+          }
+        });
+
       }
     };
   }]);
